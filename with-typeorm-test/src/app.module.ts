@@ -25,6 +25,7 @@ require('dotenv').config();
       entities: [User, Tamagotchi, UserTama],
       migrations: [],
       subscribers: [],
+      migrationsTableName: "migrations"
   }),
   TypeOrmModule.forFeature([User, Tamagotchi, UserTama]),
   UserModule,

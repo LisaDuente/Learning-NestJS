@@ -14,6 +14,9 @@ export class UserTama extends BaseEntity{
     @Column()
     public tamaId: number
 
+    @Column()
+    public condition!: string
+
     @ManyToOne(() => User, (user) => user.userTama)
     public user: User
 
