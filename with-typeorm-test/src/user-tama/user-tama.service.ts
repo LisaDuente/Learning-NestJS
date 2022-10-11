@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserTama } from '../entity/UserTama';
+import { Condition, UserTama } from '../entity/UserTama';
 import { TamagotchiService } from '../tamagotchi/tamagotchi.service';
 
 @Injectable()
@@ -46,5 +46,10 @@ export class UserTamaService {
 
     getAllTamas(userId: number){
         return UserTama.findAllTamas(userId)
+    }
+
+    updateCondition(entryId: number, condition: Condition){
+        UserTama.update({id: entryId},{condition: condition})
+        return UserTama.findBy({id: entryId})
     }
 }

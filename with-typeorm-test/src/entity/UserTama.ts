@@ -3,6 +3,15 @@ import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "t
 import { Tamagotchi } from "./Tamagotchi";
 import { User } from "./User";
 
+export enum Condition {
+    MINT = "MINT",
+    NEAR_MINT = "NEAR_MINT",
+    LIGHTLY_PLAYED = "LIGHTLY_PLAYED",
+    MODERATELY_PLAYED = "MODERATELY_PLAYED",
+    HEAVILY_PLAYED = "HEAVILY_PLAYED",
+    DAMAGED = "DAMAGED"
+}
+
 @Entity()
 export class UserTama extends BaseEntity{
     @PrimaryGeneratedColumn()
@@ -14,8 +23,8 @@ export class UserTama extends BaseEntity{
     @Column()
     public tamaId: number
 
-    @Column()
-    public condition!: string
+    @Column({type: "enum", enum: Condition, default: Condition.LIGHTLY_PLAYED})
+    public condition!: Condition
 
     @ManyToOne(() => User, (user) => user.userTama)
     public user: User
