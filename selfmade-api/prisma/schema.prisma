@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email String @unique
+  hash String
+
+  firstName String?
+  lastName String?
+  Adress String?
+
+  boardgames BoardgamesForUsers[] 
+  @@map("users")
+}
+
+
+model Boardgame{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String @unique
+  publisher String
+  category String
+  publicationDate String?
+
+  user BoardgamesForUsers[]
+}
+
+model BoardgamesForUsers{
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  boardgame Boardgame @relation(fields: [boardgameId], references: [id], onDelete: Cascade)
+  boardgameId Int
+  assignedAt DateTime @default(now())
+
+  @@id([userId, boardgameId])
+}
+
+model Admin{
+  id Int @id @default(autoincrement())
+  nickName String @unique
+  hash String
+}
