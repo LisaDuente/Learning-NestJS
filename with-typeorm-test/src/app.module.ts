@@ -8,16 +8,18 @@ import { User } from './entity/User';
 import { UserModule } from './user/user.module';
 import { TamagotchiModule } from './tamagotchi/tamagotchi.module';
 import { UserTamaModule } from './user-tama/user-tama.module';
+require('dotenv').config();
+
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: "postgres",
       host: "localhost",
-      port: 5436,
-      username: "admin",
-      password: "123",
-      database: "lisasDb",
+      port: parseInt(process.env.PORT_DATABASE),
+      username: process.env.USER_NAME,
+      password: process.env.PASSWORD,
+      database: process.env.DATABASE,
       synchronize: true,
       logging: false,
       entities: [User, Tamagotchi, UserTama],
